@@ -1,38 +1,56 @@
-# CCS3308 - Assignment 1: Virtualization and Containers
+Deployment requirements are :  
 
-## Deployment Requirements
-- Docker Engine
-- Docker Compose (plugin)  
-- Ubuntu VM (VMware)
+Having a laptop with VMWare installed, and inside that, Ubuntu OS is installed. And a virtual Docker engine together with the Docker Compose plugin. To run the Flask application, a VM should also be installed with the Python application. At the moment assignment needs an internet connection to run and establish connections between the container applications.
 
-## Application Description
-Two-service Docker app:
-- **web (Flask)** on port **5000**
-- **db (MySQL 8.0)** on port **3306**, with persistent named volume **db-data**
 
-## Network and Volume
-- Network: **app-net** (Docker bridge network)
-- Volume: **db-data** (named, persists MySQL data)
+Application Description 
 
-## Container Configuration
-- **web**: built from `web/Dockerfile`, uses env vars to connect to `db`
-- **db**: `mysql:8.0` image, initialized with database `mydb`
+This is a 2-service Docker application with a web service and a database service. For the web service, a Python Flask app serves a simple web page on port 5000. And for the database MySQL 8.0, storing the number of visits with persistent storage. And these 2 applications are communicating with each other and give a service of which application is built. The web service communicates with the database service to maintain state.
 
-## How to Use
-```bash
-# Create application resources
+Network and volume details
+
+The web and database containers are connected via the Docker network app-net with subnet 172.18.0.0/16. The web container uses IP 172.18.0.2 and the database container uses IP 172.18.0.3, allowing them to communicate easily. The database stores its files in the named volume db-data.
+
+Network List 
+
+
+Volume list 
+
+
+
+
+
+
+
+
+
+IP Address of the 2 applications 
+
+
+
+Container Configurations of containers 1 and 2 
+
+
+
+
+The web container runs a Flask app on port 5000 and connects to the database using environment variables. The db container uses mysql:8.0, listens on port 3306, and stores data in the persistent volume db-data. Both containers are connected via the app-net network, allowing communication, and the web container is set to restart automatically if it fails.
+Container list 
+
+
+
+
+
+
+Instructions
+Prepare, run, pause, and delete the application:
+# 1. Prepare application resources (network, volumes, images)
 ./prepare-app.sh
-
-# Run the application
+# 2. Start the application
 ./start-app.sh
-# The app is available at http://localhost:5000
-
-# Pause the application (preserves data)
+# The web app is available at http://localhost:5000. Open the web browser and type this,s then it will show the visiting count.
+# 3. Pause/stop the application (preserves persistent data)
 ./stop-app.sh
-
-# Delete all application resources (containers, images, network, volume)
+# 4. Delete all application resources (containers, images, network, volumes)
 ./remove-app.sh
-
-
 
 
