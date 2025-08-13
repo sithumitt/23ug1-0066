@@ -36,21 +36,31 @@ Container Configurations of containers 1 and 2
 The web container runs a Flask app on port 5000 and connects to the database using environment variables. The db container uses mysql:8.0, listens on port 3306, and stores data in the persistent volume db-data. Both containers are connected via the app-net network, allowing communication, and the web container is set to restart automatically if it fails.
 Container list 
 
-
-
-
-
-
 Instructions
 Prepare, run, pause, and delete the application:
-# 1. Prepare application resources (network, volumes, images)
+ Prepare application resources 
 ./prepare-app.sh
-# 2. Start the application
+Start the application
 ./start-app.sh
-# The web app is available at http://localhost:5000. Open the web browser and type this,s then it will show the visiting count.
-# 3. Pause/stop the application (preserves persistent data)
+The web app is available at http://localhost:5000. Open the web browser and type this,s then it will show the visiting count.
+Pause/stop the application (preserves persistent data)
 ./stop-app.sh
-# 4. Delete all application resources (containers, images, network, volumes)
+Delete all application resources (containers, images, network, volumes)
 ./remove-app.sh
+
+
+
+Assessment process record.
+First, updated the sudo apt update
+Then installed the dependencies: sudo apt install -y ca-certificates curl gnupg git
+Then added Docker's official GPG key: sudo install -m 0755 -d /etc/apt/keyrings
+Then install Docker Engine with  Compose plugin: sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+Then let My  user run Docker without sudo: sudo usermod -aG docker "$USER" newgrp docker
+Then verified all my installations: docker --version, docker compose version, git --version
+After that, create project folders and files, and paste relevant code inside them
+
+Then perform the Prepare, run, pause, and delete operations, and upload the folder to the git hub under my registration number.
+
+
 
 
